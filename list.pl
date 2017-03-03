@@ -1,4 +1,11 @@
-:- module(list, [test/0, last/2, penultimate/2, element/3, size/2, backward/2]).
+:- module(list, []).
+
+:- export(test/0).
+:- export(last/2).
+:- export(penultimate/2).
+:- export(element/3).
+:- export(size/2).
+:- export(backward/2).
 
 test() :-
 
