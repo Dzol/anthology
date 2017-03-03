@@ -6,6 +6,7 @@
 :- export(element/3).
 :- export(size/2).
 :- export(backward/2).
+:- export(palindrome/1).
 
 test() :-
 
@@ -13,7 +14,8 @@ test() :-
     penultimate(c, [a, b, c, d]),
     element(c, [a,b,c,d,e], 3),
     size(3, [fu, bar, baz]),
-    backward([baz, bar, fu], [fu, bar, baz]).
+    backward([baz, bar, fu], [fu, bar, baz]),
+    palindrome([x,a,m,a,x]).
 
 last(X, [X]).
 last(X, [_|Tl]) :-
@@ -48,5 +50,9 @@ backward(X, [], Y) :-
 backward(X, [Hd|Tl], Y) :-
 
     backward(X, Tl, [Hd|Y]).
+
+palindrome(X) :-
+
+    backward(X, X).
 
 equal(X, X).
