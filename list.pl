@@ -1,11 +1,12 @@
-:- module(list, [test/0, last/2, penultimate/2, element/3, size/2]).
+:- module(list, [test/0, last/2, penultimate/2, element/3, size/2, backward/2]).
 
 test() :-
 
     last(d, [a, b, c, d]),
     penultimate(c, [a, b, c, d]),
     element(c, [a,b,c,d,e], 3),
-    size(3, [fu, bar, baz]).
+    size(3, [fu, bar, baz]),
+    backward([baz, bar, fu], [fu, bar, baz]).
 
 last(X, [X]).
 last(X, [_|Tl]) :-
@@ -28,3 +29,17 @@ size(X, [_|Tl]) :-
 
     size(Y, Tl),
     X is Y + 1.
+
+backward(X, Y) :-
+
+    backward(X, Y, []).
+
+backward(X, [], Y) :-
+
+    equal(X, Y).
+
+backward(X, [Hd|Tl], Y) :-
+
+    backward(X, Tl, [Hd|Y]).
+
+equal(X, X).
