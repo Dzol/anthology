@@ -1,12 +1,17 @@
 :- module(list, []).
 
 :- export(test/0).
+
+%% Werner Hett's 99 Prolog Programs
 :- export(last/2).
 :- export(penultimate/2).
 :- export(element/3).
 :- export(size/2).
 :- export(backward/2).
 :- export(palindrome/1).
+
+%% Others
+:- export(sum/2).
 
 test() :-
 
@@ -15,7 +20,8 @@ test() :-
     element(c, [a,b,c,d,e], 3),
     size(3, [fu, bar, baz]),
     backward([baz, bar, fu], [fu, bar, baz]),
-    palindrome([x,a,m,a,x]).
+    palindrome([x,a,m,a,x]),
+    sum([0,1,2,3,4,5], 15).
 
 last(X, [X]).
 last(X, [_|Tl]) :-
@@ -54,5 +60,14 @@ backward(X, [Hd|Tl], Y) :-
 palindrome(X) :-
 
     backward(X, X).
+
+sum([], 0).
+sum([_], 1).
+sum([H|T], N) :-
+
+    sum(T, M),
+    N is M + H.
+
+%% Ancillary
 
 equal(X, X).
