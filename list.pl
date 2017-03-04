@@ -9,6 +9,7 @@
 :- export(size/2).
 :- export(backward/2).
 :- export(palindrome/1).
+:- export(flat/2).
 
 %% Others
 :- export(sum/2).
@@ -21,7 +22,8 @@ test() :-
     size(3, [fu, bar, baz]),
     backward([baz, bar, fu], [fu, bar, baz]),
     palindrome([x,a,m,a,x]),
-    sum([0,1,2,3,4,5], 15).
+    sum([0,1,2,3,4,5], 15),
+    flat([a, [b, [c, d], e]], [a,b,c,d,e]).
 
 last(X, [X]).
 last(X, [_|Tl]) :-
@@ -60,6 +62,20 @@ backward(X, [Hd|Tl], Y) :-
 palindrome(X) :-
 
     backward(X, X).
+
+flat(X, [X]) :-
+
+    atom(X).
+
+flat([X], Y) :-
+
+    flat(X, Y).
+
+flat([H|T], Y) :-
+
+    flat(H, A),
+    flat(T, B),
+    append(A, B, Y).
 
 sum([], 0).
 sum([_], 1).
