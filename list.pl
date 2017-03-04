@@ -10,6 +10,7 @@
 :- export(backward/2).
 :- export(palindrome/1).
 :- export(flat/2).
+:- export(compress/2).
 
 %% Others
 :- export(sum/2).
@@ -23,7 +24,8 @@ test() :-
     backward([baz, bar, fu], [fu, bar, baz]),
     palindrome([x,a,m,a,x]),
     sum([0,1,2,3,4,5], 15),
-    flat([a, [b, [c, d], e]], [a,b,c,d,e]).
+    flat([a, [b, [c, d], e]], [a,b,c,d,e]),
+    compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]).
 
 last(X, [X]).
 last(X, [_|Tl]) :-
@@ -53,7 +55,7 @@ backward(X, Y) :-
 
 backward(X, [], Y) :-
 
-    equal(X, Y).
+    same(X, Y).
 
 backward(X, [Hd|Tl], Y) :-
 
@@ -77,6 +79,24 @@ flat([H|T], Y) :-
     flat(T, B),
     append(A, B, Y).
 
+compress(X, Y) :-
+
+    compress(X, Y, []).
+
+compress([X], Y, Z) :-
+
+    backward(Y, [X|Z]).
+
+compress([A|[B|T]], Y, Z) :-
+
+    same(A, B),
+    compress([B|T], Y, Z).
+
+compress([A|[B|T]], Y, Z) :-
+
+    different(A, B),
+    compress([B|T], Y, [A|Z]).
+
 sum([], 0).
 sum([_], 1).
 sum([H|T], N) :-
@@ -86,4 +106,8 @@ sum([H|T], N) :-
 
 %% Ancillary
 
-equal(X, X).
+same(X, X).
+
+different(X, Y) :-
+
+    X \= Y.
