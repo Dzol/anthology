@@ -28,11 +28,11 @@ test() :-
   size(3, [fu, bar, baz]),
   backward([baz, bar, fu], [fu, bar, baz]),
   palindrome([x,a,m,a,x]),
-  sum([0,1,2,3,4,5], 15),
   flat([a, [b, [c, d], e]], [a,b,c,d,e]),
   compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]),
   pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]),
   encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]),
+  sum([0,1,2,3,4,5], 15),
   consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
 last(X, [X]).
@@ -98,14 +98,6 @@ encode([], []).
 encode(A, [{N,H}|Z]) :-
   consecutive(A, X, Y), length(X, N), head(X, H), encode(Y, Z).
 
-consecutive([A], [A], []).
-
-consecutive([A|[B|T]], [A|Y], Z) :-
-  same(A, B), consecutive([B|T], Y, Z).
-
-consecutive([A|[B|T]], [A], [B|T]) :-
-  different(A, B).
-
 sum([], 0).
 
 sum([_], 1).
@@ -119,5 +111,13 @@ same(X, X).
 
 different(X, Y) :-
   X \= Y.
+
+consecutive([A], [A], []).
+
+consecutive([A|[B|T]], [A|Y], Z) :-
+  same(A, B), consecutive([B|T], Y, Z).
+
+consecutive([A|[B|T]], [A], [B|T]) :-
+  different(A, B).
 
 head([X|_], X).
