@@ -18,6 +18,7 @@
 
 %% Adapted from Paul Brna's online tutorial
 :- export(successor/2).
+:- export(square/2).
 
 %% Ancillaries for Hett
 :- export(consecutive/3).
@@ -41,7 +42,8 @@ test() :-
   slice([a,b,c,d,e,f,g,h,i,k],3,7,[c,d,e,f,g]),
   sum([0,1,2,3,4,5], 15),
   consecutive([3,3,3, 2,2], [3,3,3], [2,2]),
-  successor(0, 1).
+  successor(0, 1),
+  square(2, 4).
 
 last(X, [X]).
 
@@ -121,6 +123,9 @@ slice([_|T], N, X, R) :-
 
 successor(X, Y) :-
   number(X), Y is X + 1; number(Y), X is Y - 1.
+
+square(X, Y) :-
+  number(X), Y is X * X; number(Y), X is sqrt(Y).
 
 sum([], 0).
 
