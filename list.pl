@@ -12,6 +12,9 @@
 :- export(flat/2).
 :- export(compress/2).
 
+%% Ancillaries for Hett
+:- export(consecutive/3).
+
 %% Others
 :- export(sum/2).
 
@@ -25,7 +28,8 @@ test() :-
   palindrome([x,a,m,a,x]),
   sum([0,1,2,3,4,5], 15),
   flat([a, [b, [c, d], e]], [a,b,c,d,e]),
-  compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]).
+  compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]),
+  consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
 last(X, [X]).
 
@@ -85,6 +89,17 @@ compress([A|[B|T]], Y, Z) :-
 compress([A|[B|T]], Y, Z) :-
   different(A, B),
   compress([B|T], Y, [A|Z]).
+
+consecutive([], [], []).
+
+consecutive([A], [A], []). %% Is A the same or different?
+
+consecutive([A|[B|T]], [A|Y], Z) :-
+  same(A, B),
+  consecutive([B|T], Y, Z).
+
+consecutive([A|[B|T]], [A], [B|T]) :-
+  different(A, B).
 
 sum([], 0).
 
