@@ -48,14 +48,12 @@ penultimate(X, [_|Tl]) :-
 element(X, [X|_], 1).
 
 element(X, [_|Tl], N) :-
-  M is N - 1,
-  element(X, Tl, M).
+  M is N - 1, element(X, Tl, M).
 
 size(1, [_]).
 
 size(X, [_|Tl]) :-
-  size(Y, Tl),
-  X is Y + 1.
+  size(Y, Tl), X is Y + 1.
 
 backward(X, Y) :-
   backward(X, Y, []).
@@ -76,9 +74,7 @@ flat([X], Y) :-
   flat(X, Y).
 
 flat([H|T], Y) :-
-  flat(H, A),
-  flat(T, B),
-  append(A, B, Y).
+  flat(H, A), flat(T, B), append(A, B, Y).
 
 compress(X, Y) :-
   compress(X, Y, []).
@@ -87,18 +83,15 @@ compress([X], Y, Z) :-
   backward(Y, [X|Z]).
 
 compress([A|[B|T]], Y, Z) :-
-  same(A, B),
-  compress([B|T], Y, Z).
+  same(A, B), compress([B|T], Y, Z).
 
 compress([A|[B|T]], Y, Z) :-
-  different(A, B),
-  compress([B|T], Y, [A|Z]).
+  different(A, B), compress([B|T], Y, [A|Z]).
 
 pack([], []).
 
 pack(A, [X|Z]) :-
-  consecutive(A, X, Y),
-  pack(Y, Z).
+  consecutive(A, X, Y), pack(Y, Z).
 
 code([], []).
 
@@ -108,8 +101,7 @@ code(A, [{N,H}|Z]) :-
 consecutive([A], [A], []).
 
 consecutive([A|[B|T]], [A|Y], Z) :-
-  same(A, B),
-  consecutive([B|T], Y, Z).
+  same(A, B), consecutive([B|T], Y, Z).
 
 consecutive([A|[B|T]], [A], [B|T]) :-
   different(A, B).
@@ -119,8 +111,7 @@ sum([], 0).
 sum([_], 1).
 
 sum([H|T], N) :-
-  sum(T, M),
-  N is M + H.
+  sum(T, M), N is M + H.
 
 %% Ancillary
 
