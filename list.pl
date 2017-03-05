@@ -14,6 +14,7 @@
 :- export(pack/2).
 :- export(encode/2).
 :- export(split/4).
+:- export(slice/4).
 
 %% Ancillaries for Hett
 :- export(consecutive/3).
@@ -34,6 +35,7 @@ test() :-
   pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]),
   encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]),
   split([a,b,c,d,e,f,g,h,i,k],3,[a,b,c],[d,e,f,g,h,i,k]),
+  slice([a,b,c,d,e,f,g,h,i,k],3,7,[c,d,e,f,g]),
   sum([0,1,2,3,4,5], 15),
   consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
@@ -104,6 +106,14 @@ split([H|T], 1, [H], T).
 
 split([H|T], N, [H|R], Z) :-
     M is N - 1, split(T, M, R, Z).
+
+slice([H|_], 1, 1, [H]).
+
+slice([H|T], 1, N, [H|R]) :-
+    M is N - 1, slice(T, 1, M, R).
+
+slice([_|T], N, X, R) :-
+    M is N - 1, Y is X - 1, slice(T, M, Y, R).
 
 sum([], 0).
 
