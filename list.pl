@@ -13,6 +13,7 @@
 :- export(compress/2).
 :- export(pack/2).
 :- export(encode/2).
+:- export(split/4).
 
 %% Ancillaries for Hett
 :- export(consecutive/3).
@@ -32,6 +33,7 @@ test() :-
   compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]),
   pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]),
   encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]),
+  split([a,b,c,d,e,f,g,h,i,k],3,[a,b,c],[d,e,f,g,h,i,k]),
   sum([0,1,2,3,4,5], 15),
   consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
@@ -97,6 +99,11 @@ encode([], []).
 
 encode(A, [{N,H}|Z]) :-
   consecutive(A, X, Y), length(X, N), head(X, H), encode(Y, Z).
+
+split([H|T], 1, [H], T).
+
+split([H|T], N, [H|R], Z) :-
+    M is N - 1, split(T, M, R, Z).
 
 sum([], 0).
 
