@@ -16,10 +16,6 @@
 :- export(split/4).
 :- export(slice/4).
 
-%% Adapted from Paul Brna's online tutorial
-:- export(successor/2).
-:- export(square/2).
-
 %% Ancillaries for Hett
 :- export(consecutive/3).
 
@@ -41,9 +37,7 @@ test() :-
   split([a,b,c,d,e,f,g,h,i,k],3,[a,b,c],[d,e,f,g,h,i,k]),
   slice([a,b,c,d,e,f,g,h,i,k],3,7,[c,d,e,f,g]),
   sum([0,1,2,3,4,5], 15),
-  consecutive([3,3,3, 2,2], [3,3,3], [2,2]),
-  successor(0, 1),
-  square(2, 4).
+  consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
 last(X, [X]).
 
@@ -120,12 +114,6 @@ slice([H|T], 1, N, [H|R]) :-
 
 slice([_|T], N, X, R) :-
   M is N - 1, Y is X - 1, slice(T, M, Y, R).
-
-successor(X, Y) :-
-  number(X), Y is X + 1; number(Y), X is Y - 1.
-
-square(X, Y) :-
-  number(X), Y is X * X; number(Y), X is sqrt(Y).
 
 sum([], 0).
 
