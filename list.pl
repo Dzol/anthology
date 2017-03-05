@@ -11,6 +11,7 @@
 :- export(palindrome/1).
 :- export(flat/2).
 :- export(compress/2).
+:- export(pack/2).
 
 %% Ancillaries for Hett
 :- export(consecutive/3).
@@ -29,6 +30,7 @@ test() :-
   sum([0,1,2,3,4,5], 15),
   flat([a, [b, [c, d], e]], [a,b,c,d,e]),
   compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]),
+  pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]),
   consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
 last(X, [X]).
@@ -90,7 +92,11 @@ compress([A|[B|T]], Y, Z) :-
   different(A, B),
   compress([B|T], Y, [A|Z]).
 
-consecutive([], [], []).
+pack([], []).
+
+pack(A, [X|Z]) :-
+  consecutive(A, X, Y),
+  pack(Y, Z).
 
 consecutive([A], [A], []). %% Is A the same or different?
 
