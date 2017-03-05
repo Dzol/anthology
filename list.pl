@@ -12,7 +12,7 @@
 :- export(flat/2).
 :- export(compress/2).
 :- export(pack/2).
-:- export(code/2).
+:- export(encode/2).
 
 %% Ancillaries for Hett
 :- export(consecutive/3).
@@ -32,7 +32,7 @@ test() :-
   flat([a, [b, [c, d], e]], [a,b,c,d,e]),
   compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [a,b,c,a,d,e]),
   pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]),
-  code([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]),
+  encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e], [{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]),
   consecutive([3,3,3, 2,2], [3,3,3], [2,2]).
 
 last(X, [X]).
@@ -93,10 +93,10 @@ pack([], []).
 pack(A, [X|Z]) :-
   consecutive(A, X, Y), pack(Y, Z).
 
-code([], []).
+encode([], []).
 
-code(A, [{N,H}|Z]) :-
-  consecutive(A, X, Y), length(X, N), head(X, H), code(Y, Z).
+encode(A, [{N,H}|Z]) :-
+  consecutive(A, X, Y), length(X, N), head(X, H), encode(Y, Z).
 
 consecutive([A], [A], []).
 
