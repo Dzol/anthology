@@ -4,10 +4,12 @@
 
 :- export(two/1).
 :- export(column/3).
+:- export(diagonal/4).
 
 test() :-
 
   two(World), column(World, 1, [a,d,g]),
+  two(X), diagonal(X, 1, 2, [b,c, d,e,f]),
   true.
 
 two(X) :-
@@ -28,14 +30,24 @@ column([{X, _, Value}|More], Hx, [ Value | Omega ]) :-
 column([{X, _, _}|More], Hx, Omega) :-
   different(X, Hx), column(More, Hx, Omega).
 
-%% vertical({Ax, _}, {Bx, _}) :-
-%%   same(Ax, Bx).
+diagonal([], _, _, []) :-
+  true.
 
-%% horizontal({_,Ay}, {_,By}) :-
-%%   same(Ay, By).
+diagonal([{Gx, Gy, Value}|More], Hx, Hy, [ Value | Omega ]) :-
+  diagonal({Gx, Gy}, {Hx, Hy}), diagonal(More, Hx, Hy, Omega).
 
-%% diagonal({Ax, Ay}, {Bx, By}) :-
-%%   difference(Ax, Bx, X), difference(Ay, By, Y), absolute(X, Xa), absolute(Y, Ya), same(Xa, Ya).
+diagonal([{Gx, Gy, _}|More], Hx, Hy, Omega) :-
+  \+ diagonal({Gx, Gy}, {Hx, Hy}), diagonal(More, Hx, Hy, Omega).
+
+diagonal({Ax, Ay}, {Bx, By}) :-
+
+    difference(Ax, Bx, X),
+    difference(Ay, By, Y),
+
+    absolute(X, Xa),
+    absolute(Y, Ya),
+
+    same(Xa, Ya).
 
 different(X, Y) :-
   X \= Y.
