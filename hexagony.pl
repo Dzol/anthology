@@ -3,13 +3,19 @@
 :- export(test/0).
 
 :- export(two/1).
+:- export(view/4).
 :- export(column/3).
 :- export(diagonal/4).
 
 test() :-
 
-  two(World), column(World, 1, [a,d,g]),
-  two(X), diagonal(X, 1, 2, [b,c, d,e,f]),
+  two(World),
+
+  view(World, 1, 4, [a,d,g,b,c]),
+
+  column(World, 1, [a,d,g]),
+  diagonal(World, 1, 2, [b,c,d,e,f]),
+
   true.
 
 two(X) :-
@@ -21,6 +27,14 @@ two(X) :-
         ].
 
 %% Ancillary
+
+view(World, Hx, Hy, Z) :-
+
+    column(World, Hx, A),
+    diagonal(World, Hx, Hy, B),
+
+    append(A, B, AB),
+    distinct(AB, Z).
 
 column([], _, []).
 
@@ -60,3 +74,6 @@ difference(A, B, D) :-
 
 absolute(X, Y) :-
   Y is abs(X).
+
+distinct(X, Y) :-
+    list_to_set(X, Y).
