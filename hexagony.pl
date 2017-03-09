@@ -4,8 +4,6 @@
 
 :- export(two/1).
 :- export(view/4).
-:- export(column/3).
-:- export(diagonal/4).
 
 test() :-
 
@@ -15,6 +13,8 @@ test() :-
 
   column(World, 1, [a,d,g]),
   diagonal(World, 1, 2, [b,c,d,e,f]),
+
+  tag([{_,_,fu,0}, {_,_,fu,1}], fu, [0, 1]),
 
   true.
 
@@ -30,11 +30,16 @@ two(X) :-
 
 view(World, Hx, Hy, Z) :-
 
-    column(World, Hx, A),
-    diagonal(World, Hx, Hy, B),
+  column(World, Hx, A),
+  diagonal(World, Hx, Hy, B),
 
-    append(A, B, AB),
-    distinct(AB, Z).
+  append(A, B, AB),
+  distinct(AB, Z).
+
+tag([], _, []).
+
+tag([{_,_,T,V}|More], T, [V|Omega]) :-
+  tag(More, T, Omega).
 
 column([], _, []).
 
@@ -55,13 +60,13 @@ diagonal([{Gx, Gy, _}|More], Hx, Hy, Omega) :-
 
 diagonal({Ax, Ay}, {Bx, By}) :-
 
-    difference(Ax, Bx, X),
-    difference(Ay, By, Y),
+  difference(Ax, Bx, X),
+  difference(Ay, By, Y),
 
-    absolute(X, Xa),
-    absolute(Y, Ya),
+  absolute(X, Xa),
+  absolute(Y, Ya),
 
-    same(Xa, Ya).
+  same(Xa, Ya).
 
 different(X, Y) :-
   X \= Y.
