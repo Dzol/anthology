@@ -33,7 +33,10 @@ queens([{X,Y}|O]) :-
 safe(_, []).
 
 safe(A, [B|O]) :-
-  different(A, B), \+ dangerous(A, B), safe(A, O).
+  vacant(A, B), \+ dangerous(A, B), safe(A, O).
+
+vacant(A, B) :-
+  different(A, B).
 
 dangerous(A, B) :-
   horizontal(A, B); vertical(A, B); diagonal(A, B).
