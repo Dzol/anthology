@@ -4,3 +4,6 @@ PROLOG = swipl
 
 test:
 	./test.pl
+
+shell:
+	swipl
