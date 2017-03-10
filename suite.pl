@@ -4,4 +4,4 @@ go() :-
 
   [list],     list:test(),   abolish(test/0),
   [puzzle],   puzzle:test(), abolish(test/0),
-  [hexagony], puzzle:test().
+  [hexagony], puzzle:test(), true.
