@@ -2,6 +2,7 @@
 
 go() :-
 
-  [list],     list:test(),   abolish(test/0),
-  [puzzle],   puzzle:test(), abolish(test/0),
-  [hexagony], puzzle:test(), true.
+  [list],     list:test(),     abolish(test/0),
+  [puzzle],   puzzle:test(),   abolish(test/0),
+  [hexagony], hexagony:test(), abolish(test/0),
+  [bob],      bob:test(),      true.
