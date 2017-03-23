@@ -1,12 +1,8 @@
 #!/usr/bin/swipl -s
 
-:- initialization main.
+:- initialization [suite], go(), success.
 
-main :-
-  [suite], go(), success.
-
-main :-
-  failure.
+:- initialization failure.
 
 success :-
   halt(0).
