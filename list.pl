@@ -117,8 +117,6 @@ slice([_|T], N, X, R) :-
 
 sum([], 0).
 
-sum([_], 1).
-
 sum([H|T], N) :-
   sum(T, M), N is M + H.
 
